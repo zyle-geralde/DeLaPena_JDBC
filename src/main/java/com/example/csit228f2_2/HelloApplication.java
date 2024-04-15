@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,16 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        try(Connection c = SqlConnect.getConnection(); Statement statement = c.createStatement()){
+            String createTableQuery ="CREATE TABLE IF NOT EXISTS users (" +
+                    "id INT AUTO_INCREMENT PRIMARY KEY," +
+                    "name VARCHAR(50) NOT NULL," +
+                    "password VARCHAR(50) NOT NULL)";
+            statement.execute(createTableQuery);
+            System.out.println("Table Created successfully");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         users = new ArrayList<>();
         // LOAD USERS
         users.add(new User("tsgtest", "123456"));
@@ -114,6 +125,92 @@ public class HelloApplication extends Application {
             public void handle(ActionEvent actionEvent) {
                 String username = tfUsername.getText();
                 String password = pfPassword.getText();
+
+                try(Connection c = SqlConnect.getConnection(); Statement statement = c.createStatement()){
+
+                    String selectQuery = "SELECT * FROM users";
+                    ResultSet resultSet = statement.executeQuery(selectQuery);
+
+                    while(resultSet.next()){
+                        int id  = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String pass = resultSet.getString("password");
+                        //System.out.printf("\nID: %d\nName: %s\nEmail:%s\n",id,name,email);
+
+                        for (User user : users) {
+                            if (username.equals(name) && password.equals(pass)) {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+                                try {
+                                    Scene scene = new Scene(loader.load());
+                                    stage.setScene(scene);
+                                    stage.show();
+                                    break;
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                        actionTarget.setText("Invalid username/password");
+                        actionTarget.setOpacity(1);
+                    }
+                }catch(SQLException e){
+                    e.printStackTrace();
+                }
+
+                /*for (User user : users) {
+                    if (username.equals(user.username) && password.equals(user.password)) {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
+                        try {
+                            Scene scene = new Scene(loader.load());
+                            stage.setScene(scene);
+                            stage.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                actionTarget.setText("Invalid username/password");
+                actionTarget.setOpacity(1);*/
+            }
+        });
+
+        Button btnRegister =  new Button("Register");
+        btnRegister.setFont(Font.font(45));
+        hbSignIn.getChildren().add(btnRegister);
+
+
+        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String username = tfUsername.getText();
+                String password = pfPassword.getText();
+                if(username.trim().equals("") || password.equals("")){
+                    actionTarget.setText("Invalid username/password");
+                    actionTarget.setOpacity(1);
+                }
+                else{
+                    try(Connection c = SqlConnect.getConnection(); PreparedStatement statement = c.prepareStatement("INSERT INTO users (name,password) VALUES (?,?)")){
+
+                        String name = username;
+                        String pass = password;
+                        statement.setString(1,name);
+                        statement.setString(2,pass);
+                        int rowsInserted = statement.executeUpdate();
+
+                        if(rowsInserted > 0){
+                            actionTarget.setText("Data Inserted successfully");
+                            actionTarget.setOpacity(1);
+                            tfUsername.setText("");
+                            pfPassword.setText("");
+                        }
+                    }catch(SQLException e){
+                        e.printStackTrace();
+                    }
+                }
+
+                ///////////////////////////////////////
+                /*String username = tfUsername.getText();
+                String password = pfPassword.getText();
                 for (User user : users) {
                     if (username.equals(user.username) && password.equals(user.password)) {
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("hello-view.fxml"));
@@ -127,9 +224,10 @@ public class HelloApplication extends Application {
                     }
                 }
                 actionTarget.setText("Invalid username/password");
-                actionTarget.setOpacity(1);
+                actionTarget.setOpacity(1);*/
             }
         });
+
 
         EventHandler<KeyEvent> fieldChange = new EventHandler<KeyEvent>() {
             @Override
