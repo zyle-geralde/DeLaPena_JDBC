@@ -14,7 +14,7 @@
    <children>
       <Pane fx:id="backcolor" prefHeight="601.0" prefWidth="800.0" />
       <Pane fx:id="coverhead" prefHeight="98.0" prefWidth="800.0" />
-      <ScrollPane fx:id="notepane2" layoutY="175.0" prefHeight="425.0" prefWidth="800.0">
+      <ScrollPane fx:id="notepane2" layoutX="47.0" layoutY="182.0" prefHeight="394.0" prefWidth="715.0">
          <!--<content>
             <VBox fx:id="notepane" prefHeight="200.0" prefWidth="794.0" />
          </content>--></ScrollPane>

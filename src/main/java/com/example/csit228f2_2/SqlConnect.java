@@ -14,9 +14,6 @@ public class SqlConnect {
             Class.forName("com.mysql.cj.jdbc.Driver");
             c = DriverManager.getConnection(URL,username,password);
 
-            //Atomicity
-            c.setAutoCommit(false);
-
         }catch(ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }

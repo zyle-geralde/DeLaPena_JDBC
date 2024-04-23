@@ -175,6 +175,8 @@ public class MainController {
                 usertext.setText("");
                 passtext.setText("");
 
+                labelcheck.setOpacity(0);
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -426,8 +428,8 @@ public class MainController {
 
 
                     VBox store = new VBox();
-                    store.setMinWidth(780);
-                    store.setMaxWidth(780);
+                    store.setMinWidth(705);
+                    store.setMaxWidth(705);
                     store.setSpacing(10);
                     Label lab = new Label(post);
                     lab.setWrapText(true);
