@@ -13,7 +13,10 @@ public class SqlConnect {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             c = DriverManager.getConnection(URL,username,password);
-            System.out.println("Connected to the database");
+
+            //Atomicity
+            c.setAutoCommit(false);
+
         }catch(ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }

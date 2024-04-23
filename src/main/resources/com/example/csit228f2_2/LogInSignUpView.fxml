@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AllParent" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.csit228f2_2.MainController">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="800.0" pickOnBounds="true">
+         <image>
+            <Image url="@ai-generated-8644963_1280.jpg" />
+         </image>
+      </ImageView>
+      <Pane fx:id="paneback" layoutX="178.0" layoutY="156.0" prefHeight="330.0" prefWidth="456.0" />
+      <Circle fx:id="logohold" fill="DODGERBLUE" layoutX="406.0" layoutY="101.0" radius="67.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="notetify" layoutX="299.0" layoutY="138.0" text="NOTETIFY">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="LogBut" layoutX="341.0" layoutY="397.0" mnemonicParsing="false" onAction="#LogIn" text="Log In">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
+      <TextField fx:id="usertext" layoutX="379.0" layoutY="235.0" prefHeight="42.0" prefWidth="197.0" />
+      <Label fx:id="userlabel" layoutX="208.0" layoutY="228.0" text="User Name">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="passlabel" layoutX="216.0" layoutY="316.0" text="Password">
+         <font>
+            <Font name="Arial Black" size="23.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="passtext" layoutX="378.0" layoutY="322.0" prefHeight="42.0" prefWidth="198.0" />
+      <Button fx:id="SignBut" layoutX="442.0" layoutY="397.0" mnemonicParsing="false" onAction="#SignUp" text="Sign Up">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelcheck" layoutX="299.0" layoutY="466.0" opacity="0.0" text="Invalid Username or Password">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
